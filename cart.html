@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | Restart Repairs</title>
+    <script src="scripts.js" defer></script>
+    <style>
+        /* --- GLOBAL THEME & VARIABLES --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --bg-dark: #1e1e24; --asus-blue: #0082ff; --glass: rgba(255, 255, 255, 0.05); }
+        body { background-color: var(--bg-dark); color: white; font-family: 'Segoe UI', sans-serif; }
+
+        /* --- HEADER & NAVIGATION --- */
+        header { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .logo { color: black; font-weight: 800; font-size: 1.5rem; text-decoration: none; }
+        .logo span { color: var(--asus-blue); }
+        nav { display: flex; align-items: center; gap: 20px; }
+        nav a { text-decoration: none; color: black; font-weight: 600; font-size: 0.9rem; }
+        .nav-icons { display: flex; align-items: center; gap: 15px; border-left: 1px solid #ddd; padding-left: 15px; }
+
+        /* --- CURRENCY SELECTOR [cite: 26] --- */
+        #currency-picker { padding: 5px; border-radius: 5px; border: 1px solid #ccc; font-weight: bold; cursor: pointer; }
+
+        /* --- MAIN CART LAYOUT --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 60px 5%; }
+        .cart-wrapper { display: flex; gap: 40px; margin-top: 30px; }
+        .cart-items { flex: 2; }
+        
+        /* --- ITEM DETAILS & AVAILABILITY [cite: 11, 12] --- */
+        .cart-item { display: flex; align-items: center; gap: 20px; background: var(--glass); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px; transition: 0.3s; }
+        .cart-item:hover { border-color: var(--asus-blue); }
+        .cart-item img { width: 120px; height: 120px; border-radius: 15px; object-fit: cover; }
+        .availability { font-size: 0.75rem; font-weight: bold; color: #00ff88; margin-bottom: 5px; display: block; }
+
+        /* --- RELATED PRODUCTS [cite: 15] --- */
+        .related-section { margin-top: 30px; padding: 20px; background: rgba(0, 130, 255, 0.05); border-radius: 15px; border: 1px dashed var(--asus-blue); }
+
+        /* --- SUMMARY & COST BREAKDOWN [cite: 20, 23, 25] --- */
+        .cart-summary { flex: 1; background: var(--glass); backdrop-filter: blur(10px); padding: 30px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); height: fit-content; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 15px; color: #a0a0a0; }
+        .total-row { display: flex; justify-content: space-between; font-size: 1.5rem; font-weight: 800; border-top: 1px solid #444; padding-top: 15px; margin-top: 15px; color: white; }
+        
+        /* --- MISCELLANEOUS COSTS [cite: 25] --- */
+        .misc-costs { margin: 20px 0; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 10px; }
+        .misc-costs label { display: block; font-size: 0.85rem; margin-bottom: 8px; cursor: pointer; }
+
+        .checkout-btn { display: block; width: 100%; background: var(--asus-blue); color: white; text-align: center; padding: 18px; border-radius: 50px; text-decoration: none; font-weight: 700; margin-top: 20px; transition: 0.3s; }
+        .checkout-btn:hover { box-shadow: 0 0 20px rgba(0, 130, 255, 0.4); transform: translateY(-2px); }
+
+        /* --- FOOTER & SECURITY [cite: 18, 28] --- */
+        footer { margin-top: 80px; padding: 50px 5%; background: #111; text-align: center; border-top: 1px solid #333; }
+        .security-badges { margin: 20px 0; display: flex; justify-content: center; gap: 20px; opacity: 0.6; font-size: 0.8rem; }
+        .newsletter input { padding: 10px; border-radius: 5px; border: none; width: 250px; }
+
+        /* --- LIVE CHAT SUPPORT [cite: 18] --- */
+        #live-chat { position: fixed; bottom: 20px; right: 20px; background: var(--asus-blue); color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 1000; }
+
+        @media (max-width: 900px) { .cart-wrapper { flex-direction: column; } }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">RESTART <span>REPAIRS</span></a>
+        <nav>
+            <select id="currency-picker" onchange="convertCurrency()">
+                <option value="USD">USD ($)</option>
+                <option value="JMD">JMD (J$)</option>
+                <option value="GBP">GBP (£)</option>
+            </select>
+            <a href="index.html">Home</a>
+            <a href="products.html">Buy PCs</a>
+            <a href="trade.html">Trade-In</a>
+            <div class="nav-icons">
+                <a href="wishlist.html">⭐</a>
+                <a href="cart.html" style="color:var(--asus-blue)">🛒</a>
+                <a href="login.html">👤</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1>Your Shopping Cart</h1>
+        <div class="cart-wrapper">
+            <div class="cart-items">
+                <div class="cart-item">
+                    <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?w=300" alt="Refurbished Gaming PC">
+                    <div style="flex:1">
+                        <span class="availability">● IN STOCK</span> <h3>RTX 3070 Advanced Build</h3>
+                        <p style="color: #888; font-size: 0.85rem; margin-top: 5px;">Certified Refurbished - 16GB RAM, 1TB SSD</p>
+                        <div style="color:gold; font-size: 0.8rem; margin-top: 5px;">⭐⭐⭐⭐⭐ (24 Reviews)</div>
+                    </div>
+                    <p class="price" data-usd="1200" style="font-weight:bold; font-size:1.2rem;">$1,200.00</p>
+                </div>
+
+                <div class="related-section">
+                    <h4 style="margin-bottom: 10px; font-size: 0.9rem; color: var(--asus-blue);">Recommended for your Build:</h4>
+                    <p style="font-size: 0.8rem; color: #ccc;">• Mechanical RGB Keyboard (+$45.00)<br>• 27" Curved Gaming Monitor (+$199.00)</p>
+                </div>
+            </div>
+
+            <div class="cart-summary">
+                <h2>Order Summary</h2>
+                <div class="summary-row" style="margin-top: 20px;">
+                    <span>Subtotal</span>
+                    <span class="price" data-usd="1200">$1,200.00</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span>Estimated Tax (GCT 15%)</span>
+                    <span class="price" data-usd="180">$180.00</span>
+                </div>
+
+                <div class="misc-costs">
+                    <h4 style="font-size: 0.8rem; margin-bottom: 10px; color: var(--asus-blue);">Customize your Order:</h4>
+                    <label><input type="checkbox" id="gift-wrap"> Add Gift Wrapping (+$10.00)</label>
+                    <label><input type="checkbox" id="gift-card"> Add Personal Gift Card (+$5.00)</label>
+                </div>
+
+                <div class="summary-row">
+                    <span>Shipping Speed</span>
+                    <span style="color: white;">Standard (Free)</span>
+                </div>
+
+                <div class="total-row">
+                    <span>Total Due</span>
+                    <span id="final-total" class="price" data-usd="1380">$1,380.00</span>
+                </div>
+
+                <a href="checkout.html" class="checkout-btn">Proceed to Checkout</a>
+                <p style="text-align:center; font-size:0.7rem; color:#888; margin-top:15px;">By clicking, you agree to our <a href="policy.html" style="color:#888;">Return Policy</a>.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="newsletter">
+            <h4 style="margin-bottom: 15px;">Subscribe to our Mailing List (E-Service)</h4>
+            <input type="email" placeholder="Enter your email">
+            <button style="padding: 10px 20px; background: var(--asus-blue); border:none; color:white; cursor:pointer; border-radius:5px;">Join</button>
+        </div>
+        
+        <div class="security-badges">
+            <span>🛡️ NORTON VERIFIED</span>
+            <span>🛡️ MCAFEE SECURE</span>
+            <span>🔒 256-BIT SSL ENCRYPTION</span>
+        </div>
+        
+        <p style="color: #666; font-size: 0.8rem;">&copy; 2025 Restart Repairs. All Content Copyrighted[cite: 36].</p>
+    </footer>
+
+    <div id="live-chat" onclick="alert('Connecting to E-Support Agent...')">💬 Live Chat</div>
+
+    <script>
+        // Multi-Currency Converter [cite: 26]
+        function convertCurrency() {
+            const picker = document.getElementById('currency-picker');
+            const rates = { USD: 1, JMD: 155, GBP: 0.78 };
+            const symbols = { USD: '$', JMD: 'J$', GBP: '£' };
+            const selected = picker.value;
+
+            document.querySelectorAll('.price').forEach(el => {
+                const usdValue = parseFloat(el.getAttribute('data-usd'));
+                const converted = (usdValue * rates[selected]).toLocaleString(undefined, {minimumFractionDigits: 2});
+                el.innerText = `${symbols[selected]}${converted}`;
+            });
+        }
+    </script>
+</body>
+</html>

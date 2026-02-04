@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restart Repairs - Buy, Sell, and Trade PCs</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo" style="text-decoration: none;">RESTART <span>REPAIRS</span></a> 
+        <nav>
+            <select id="currency-picker" onchange="updateCurrency()" style="margin-right: 15px; padding: 5px; border-radius: 5px; cursor: pointer; background: #f0f0f0; border: 1px solid #ccc;">
+                <option value="USD">USD ($)</option>
+                <option value="JMD">JMD (J$)</option>
+                <option value="GBP">GBP (£)</option>
+            </select>
+
+            <a href="index.html">Home</a>
+            <a href="products.html">Buy PCs</a>
+            <a href="trade.html">Trade-In</a>
+            <a href="membership.html">Membership</a>
+            
+            <div class="nav-icons">
+                <a href="wishlist.html" title="Wishlist">⭐</a>
+                <a href="cart.html" title="Cart">🛒</a>
+                <a href="login.html" id="loginIcon">👤</a>
+                <button id="logoutBtn" style="display:none; background:#ff4d4d; color:white; border:none; padding:8px 15px; border-radius:20px; cursor:pointer; font-weight:bold; margin-left:10px;" onclick="handleLogout()">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="slideshow-container">
+        <div class="mySlides fade">
+            <div class="hero slide-1" style="position: relative; overflow: hidden;">
+                <video autoplay muted loop id="hero-video" style="position: absolute; min-width: 100%; min-height: 100%; z-index: -1; filter: brightness(0.4); top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-circuit-board-and-electronic-components-4447-large.mp4" type="video/mp4">
+                </video>
+                <div class="hero-content">
+                    <span class="badge">CERTIFIED REFURBISHED</span>
+                    <h1>Performance Reborn.</h1>
+                    <p>High-quality pre-owned PCs, tested and repaired by professionals.</p>
+                    <a href="products.html" class="cta-button">Shop Latest Deals</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mySlides fade">
+            <div class="hero slide-2">
+                <div class="hero-content">
+                    <span class="badge">TRADE-IN SPECIAL</span>
+                    <h1>Upgrade Your Rig.</h1>
+                    <p>Get instant credit for your old PC and put it toward a new machine.</p>
+                    <a href="trade.html" class="cta-button">Start Trade-In</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="slider-dots">
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+        </div>
+    </div>
+
+    <div style="background: #111; padding: 30px 5%; text-align: center; border-bottom: 1px solid #333;">
+        <h3 style="color:white; margin-bottom: 15px;">Search Our Inventory</h3>
+        <form action="products.html" method="GET" style="max-width: 600px; margin: 0 auto; display: flex;">
+            <input type="text" placeholder="Search by GPU (e.g., RTX 3080)..." style="flex: 1; padding: 15px; border-radius: 50px 0 0 50px; border: none; outline: none;">
+            <button type="submit" style="padding: 0 30px; border-radius: 0 50px 50px 0; border: none; background: #0082ff; color: white; font-weight: bold; cursor: pointer;">Search</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <section class="section">
+            <h2>🔥 Featured Products</h2>
+            <p>Check out our top-selling refurbished machines. Search, filter, and compare with ease!</p>
+            <div class="product-placeholder">
+                <p style="color:#888;">[ Related Inventory: Gaming Keyboards & High-FPS Monitors ]</p>
+            </div>
+            <a href="products.html" class="cta-button">View All PCs</a>
+        </section>
+
+        <section class="section" style="background: rgba(0, 130, 255, 0.05); padding: 40px; border-radius: 20px; border: 1px dashed #0082ff;">
+            <h2>📬 Join Our Mailing List</h2>
+            <p>Receive weekly stock alerts, repair tips, and exclusive discount codes.</p>
+            <div style="margin-top: 20px;">
+                <input type="email" placeholder="Enter your email" style="padding: 12px; border-radius: 5px; border: 1px solid #444; background: #000; color: white; width: 250px;">
+                <button onclick="alert('Thank you for subscribing!')" class="cta-button" style="padding: 10px 25px;">Subscribe</button>
+            </div>
+        </section>
+    </div>
+
+    <footer style="text-align: center; padding: 50px; background: #111;">
+        <div style="margin-bottom: 25px; opacity: 0.6; display: flex; justify-content: center; gap: 20px; font-size: 0.8rem; color: white;">
+            <span>🛡️ NORTON SECURE</span>
+            <span>🛡️ MCAFEE SAFE</span>
+            <span>🔒 SSL ENCRYPTED</span>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <a href="policy.html" style="color: #888; text-decoration: none; margin: 0 10px;">Return Policy</a>
+            <a href="policy.html" style="color: #888; text-decoration: none; margin: 0 10px;">Warranties</a>
+            <a href="policy.html" style="color: #888; text-decoration: none; margin: 0 10px;">Copyright Info</a>
+        </div>
+
+        <p style="color: white;">&copy; 2025 Restart Repairs. All Rights Reserved.</p>
+    </footer>
+
+    <div id="live-chat" onclick="window.location.href='support.html'" style="position: fixed; bottom: 20px; right: 20px; background: #0082ff; color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 9999;">
+        💬 Support Chat
+    </div>
+
+    <script>
+        // Runs immediately on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const loginIcon = document.getElementById('loginIcon');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            if (isLoggedIn === 'true') {
+                loginIcon.style.display = 'none'; // Hide Profile Icon
+                logoutBtn.style.display = 'inline-block'; // Show Logout Button
+            }
+        });
+
+        function handleLogout() {
+            if (confirm("Are you sure you want to log out?")) {
+                localStorage.removeItem('isLoggedIn'); // Clear the session
+                alert("Logged out successfully.");
+                window.location.reload(); // Refresh the page to update UI
+            }
+        }
+
+        function updateCurrency() {
+            const currency = document.getElementById('currency-picker').value;
+            alert("Currency switched to " + currency + ". Prices will update shortly.");
+        }
+    </script>
+</body>
+</html>

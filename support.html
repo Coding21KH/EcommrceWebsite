@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Chat | Restart Repairs</title>
+    <style>
+        /* --- 1. GLOBAL STYLES & THEME --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        :root { 
+            --bg-dark: #1e1e24; 
+            --asus-blue: #0082ff; 
+            --glass: rgba(255, 255, 255, 0.05); 
+        }
+        
+        body { 
+            background-color: var(--bg-dark); 
+            color: white; 
+            font-family: 'Segoe UI', sans-serif; 
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Prevents double scrollbars */
+        }
+
+        /* --- 2. FIXED HEADER (Flexbox Fix) --- */
+        header { 
+            background: white; 
+            padding: 15px 5%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            flex-shrink: 0; /* Keeps header from squishing */
+        }
+
+        .logo { color: black; font-weight: 800; font-size: 1.5rem; text-decoration: none; }
+        .logo span { color: var(--asus-blue); }
+
+        nav { 
+            display: flex; 
+            align-items: center; 
+            gap: 20px; 
+        }
+
+        nav a { text-decoration: none; color: black; font-weight: 600; font-size: 0.9rem; }
+
+        .nav-icons { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            border-left: 1px solid #ddd; 
+            padding-left: 15px; 
+        }
+
+        /* --- 3. CHAT INTERFACE (Glassmorphism) --- */
+        .chat-container {
+            flex-grow: 1;
+            max-width: 900px;
+            margin: 20px auto;
+            width: 95%;
+            display: flex;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+        }
+
+        .chat-window {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding-right: 10px;
+        }
+
+        /* Message Bubbles */
+        .msg {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 15px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .bot {
+            background: rgba(255, 255, 255, 0.1);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .user {
+            background: var(--asus-blue);
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        /* Input Bar */
+        .input-bar {
+            display: flex;
+            gap: 10px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        input {
+            flex: 1;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #444;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            outline: none;
+        }
+
+        input:focus { border-color: var(--asus-blue); }
+
+        button {
+            background: var(--asus-blue);
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">RESTART <span>REPAIRS</span></a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="products.html">Buy PCs</a>
+            <a href="trade.html">Trade-In</a>
+            <a href="membership.html">Membership</a>
+            <div class="nav-icons">
+                <a href="wishlist.html">⭐</a>
+                <a href="cart.html">🛒</a>
+                <a href="login.html">👤</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="chat-container">
+        <div class="chat-window">
+            <div class="chat-messages" id="chatBox">
+                <div class="msg bot">Hello! Welcome to Restart Repairs Support. How can we help you today?</div>
+            </div>
+
+            <div class="input-bar">
+                <input type="text" id="userInput" placeholder="Ask about your order or trade-in...">
+                <button onclick="sendMsg()">Send</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function sendMsg() {
+            const inputField = document.getElementById('userInput');
+            const chatBox = document.getElementById('chatBox');
+            const userText = inputField.value.trim();
+
+            if (userText !== "") {
+                // 1. Add User Message
+                const userDiv = document.createElement('div');
+                userDiv.className = 'msg user';
+                userDiv.textContent = userText;
+                chatBox.appendChild(userDiv);
+
+                // Clear input
+                inputField.value = "";
+
+                // 2. Automated Bot Response (Simulated)
+                setTimeout(() => {
+                    const botDiv = document.createElement('div');
+                    botDiv.className = 'msg bot';
+                    
+                    // Simple Logic for the bot
+                    if(userText.toLowerCase().includes("order")) {
+                        botDiv.textContent = "Please provide your Order Number (e.g., #RR-1234) so I can track it for you.";
+                    } else if(userText.toLowerCase().includes("trade")) {
+                        botDiv.textContent = "Our trade-in process takes 2-3 business days for inspection after we receive your device.";
+                    } else {
+                        botDiv.textContent = "Thank you for your message. A technical agent will be with you shortly.";
+                    }
+                    
+                    chatBox.appendChild(botDiv);
+                    
+                    // Auto-scroll to the bottom
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }, 800);
+
+                // Auto-scroll for user message
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        }
+
+        // Allow pressing "Enter" to send
+        document.getElementById("userInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                sendMsg();
+            }
+        });
+    </script>
+
+</body>
+</html>

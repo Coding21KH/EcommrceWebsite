@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Restart Repairs</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --bg-dark: #1e1e24; --asus-blue: #0082ff; --glass: rgba(255, 255, 255, 0.05); }
+        body { background-color: var(--bg-dark); color: white; font-family: 'Segoe UI', sans-serif; }
+        header { background: white; padding: 15px 5%; display: flex; justify-content: center; align-items: center; }
+        .logo { color: black; font-weight: 800; font-size: 1.5rem; text-decoration: none; }
+        .logo span { color: var(--asus-blue); }
+
+        .container { max-width: 1000px; margin: 40px auto; padding: 0 5%; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .checkout-box { background: var(--glass); padding: 30px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
+        
+        h2 { color: var(--asus-blue); margin-bottom: 20px; font-size: 1.1rem; text-transform: uppercase; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        label { display: block; font-size: 0.75rem; color: #a0a0a0; margin-bottom: 5px; margin-top: 15px; }
+        input, select { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid #444; color: white; padding: 12px; border-radius: 10px; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--asus-blue); }
+        
+        /* Payment Methods */
+        .payment-methods { display: flex; gap: 10px; margin-bottom: 20px; }
+        .method { flex: 1; padding: 12px; border: 1px solid #444; border-radius: 10px; text-align: center; cursor: pointer; font-size: 0.8rem; transition: 0.3s; opacity: 0.6; }
+        .method.active { border-color: var(--asus-blue); background: rgba(0, 130, 255, 0.1); opacity: 1; font-weight: bold; }
+
+        .payment-info-box { min-height: 150px; }
+        .hidden { display: none; }
+
+        .pay-btn { width: 100%; background: var(--asus-blue); color: white; border: none; padding: 18px; border-radius: 50px; font-weight: 800; cursor: pointer; margin-top: 20px; }
+        .pay-btn:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(0, 130, 255, 0.4); }
+    </style>
+</head>
+<body>
+    <header><a href="index.html" class="logo">RESTART <span>REPAIRS</span></a></header>
+
+    <main class="container">
+        <section class="checkout-box">
+            <h2>Shipping Address</h2>
+            <label>Full Name</label><input type="text" placeholder="John Doe">
+            <label>Street</label><input type="text" placeholder="123 Gaming Street">
+            <div style="display:flex; gap:10px">
+                <div style="flex:2"><label>City</label><input type="text"></div>
+                <div style="flex:1"><label>Zip</label><input type="text"></div>
+            </div>
+        </section>
+
+        <section class="checkout-box">
+            <h2>Payment System</h2>
+            <div class="payment-methods" id="method-selector">
+                <div class="method active" data-target="credit">Credit Card</div>
+                <div class="method" data-target="paypal">PayPal</div>
+                <div class="method" data-target="moneyorder">Money Order</div>
+            </div>
+
+            <div class="payment-info-box">
+                <div id="credit-fields">
+                    <label>Card Number</label><input type="text" placeholder="XXXX XXXX XXXX XXXX">
+                    <div style="display:flex; gap:10px">
+                        <input type="text" placeholder="MM/YY">
+                        <input type="password" placeholder="CVC">
+                    </div>
+                </div>
+                <div id="paypal-fields" class="hidden">
+                    <p style="text-align:center; padding: 20px;">You will be redirected to the **PayPal** secure login after clicking process.</p>
+                </div>
+                <div id="moneyorder-fields" class="hidden">
+                    <p style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; font-size: 0.85rem;">
+                        Please mail your money order to:<br>
+                        **Restart Repairs HQ**<br>
+                        456 Tech Boulevard, Silicon Suite 101
+                    </p>
+                </div>
+            </div>
+
+            <button class="pay-btn" onclick="alert('Order Successful! Verification email sent.')">Process Order</button>
+        </section>
+    </main>
+
+    <script>
+        // Logic to switch payment methods
+        const methods = document.querySelectorAll('.method');
+        const containers = {
+            credit: document.getElementById('credit-fields'),
+            paypal: document.getElementById('paypal-fields'),
+            moneyorder: document.getElementById('moneyorder-fields')
+        };
+
+        methods.forEach(method => {
+            method.addEventListener('click', () => {
+                // Remove active class from all
+                methods.forEach(m => m.classList.remove('active'));
+                // Add to clicked
+                method.classList.add('active');
+                
+                // Hide all info boxes
+                Object.values(containers).forEach(c => c.classList.add('hidden'));
+                // Show the target
+                containers[method.dataset.target].classList.remove('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
