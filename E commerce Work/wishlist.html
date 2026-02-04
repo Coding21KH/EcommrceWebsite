@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Wishlist | Restart Repairs</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
+    <style>
+        .wishlist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; margin-top: 30px; }
+        .wishlist-item { background: rgba(255,255,255,0.05); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; position: relative; }
+        .availability { font-size: 0.7rem; font-weight: bold; color: #00ff88; margin-bottom: 5px; display: block; }
+        .nav-icons { display: flex; align-items: center; gap: 15px; border-left: 1px solid #ddd; padding-left: 15px; }
+    </style>
+</head>
+<body style="background:#1e1e24; color:white;">
+    <header style="background:white; padding:15px 5%; display:flex; justify-content:space-between; align-items:center;">
+        <a href="index.html" class="logo" style="color:black; font-weight:800; text-decoration:none;">RESTART <span style="color:#0082ff;">REPAIRS</span></a>
+        <nav style="display:flex; align-items:center; gap:20px;">
+            <select id="currency-picker" style="border:1px solid #ddd; padding:5px; border-radius:5px;">
+                <option value="USD">USD ($)</option>
+                <option value="JMD">JMD (J$)</option>
+                <option value="GBP">GBP (£)</option>
+            </select>
+            <a href="index.html" style="color:black; text-decoration:none;">Home</a>
+            <div class="nav-icons">
+                <a href="wishlist.html" style="text-decoration:none; font-size:1.2rem;">⭐</a>
+                <a href="cart.html" style="text-decoration:none; font-size:1.2rem;">🛒</a>
+            </div>
+        </nav>
+    </header>
+
+    <main style="max-width:1200px; margin:0 auto; padding:60px 5%;">
+        <h1>Saved for Later</h1>
+        <input type="text" id="pcSearch" placeholder="Search your wishlist..." style="width:100%; padding:15px; margin:20px 0; border-radius:10px; border:1px solid #444; background:rgba(0,0,0,0.3); color:white;">
+        
+        <div class="wishlist-grid">
+            <div class="wishlist-item">
+                <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=400" style="width:100%; height:200px; object-fit:cover;">
+                <div style="padding:20px;">
+                    <span class="availability">● IN STOCK</span>
+                    <h3>RTX 4080 Gaming Rig</h3>
+                    <div style="color:gold; font-size:0.8rem;">⭐⭐⭐⭐⭐ (8 Reviews)</div>
+                    <p class="price" data-usd="2499">$2,499.00</p>
+                    <a href="cart.html" class="cta-button" style="display:block; text-align:center; background:#0082ff; color:white; padding:12px; border-radius:50px; text-decoration:none; margin-top:15px;">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer style="text-align:center; padding:50px; border-top:1px solid #333;">
+        <div style="margin-bottom:20px;">
+            <span style="opacity:0.5; margin:0 10px;">🛡️ NORTON SECURE</span>
+            <span style="opacity:0.5; margin:0 10px;">🛡️ MCAFEE SECURE</span>
+        </div>
+        <p>&copy; 2025 Restart Repairs. <a href="policy.html" style="color:#888;">Terms & Warranties</a></p>
+    </footer>
+    <div id="live-chat" style="position:fixed; bottom:20px; right:20px; background:#0082ff; padding:15px 25px; border-radius:50px; cursor:pointer; font-weight:bold;">💬 Support</div>
+</body>
+</html>

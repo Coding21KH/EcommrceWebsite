@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed | Restart Repairs</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root { --bg-dark: #1e1e24; --asus-blue: #0082ff; --glass: rgba(255, 255, 255, 0.05); }
+        body { background-color: var(--bg-dark); color: white; font-family: 'Segoe UI', sans-serif; }
+        
+        .confirmation-wrapper {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 40px;
+            background: var(--glass);
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .success-icon { font-size: 4rem; color: #00ff88; margin-bottom: 20px; }
+        
+        .order-summary-box {
+            text-align: left;
+            background: rgba(0,0,0,0.3);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+
+        .total-row {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--asus-blue);
+            margin-top: 20px;
+        }
+
+        .badge {
+            background: var(--asus-blue);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+
+        .footer-note { font-size: 0.8rem; color: #666; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="confirmation-wrapper">
+        <div class="success-icon">✔</div>
+        <h1>Order Confirmed!</h1>
+        <p>Thank you for choosing Restart Repairs. Your refurbished machine is being prepared.</p>
+        
+        <p style="margin-top: 10px;">Order Number: <strong id="order-id">#RR-882910</strong></p>
+
+        <div class="order-summary-box">
+            <h3>Cost Breakdown</h3> <div class="summary-row">
+                <span>Subtotal (1x Refurbished Gaming PC)</span>
+                <span>$850.00</span>
+            </div>
+            
+            <div class="summary-row">
+                <span>Tax (GCT 15%)</span>
+                <span>$127.50</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Shipping (Express - 2-3 Days)</span>
+                <span>$25.00</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Miscellaneous (Gift Wrapping)</span>
+                <span>$10.00</span>
+            </div>
+
+            <div class="summary-row total-row">
+                <span>TOTAL DUE</span>
+                <span id="final-total">$1,012.50</span>
+            </div>
+        </div>
+
+        <div style="text-align: left; margin-bottom: 30px;">
+            <h3>Shipping & Payment Details</h3> <p><strong>Shipping Method:</strong> Door-to-Door Courier</p>
+            <p><strong>Payment Method:</strong> PayPal (e-payment) [cite: 30]</p>
+        </div>
+
+        <a href="index.html" class="cta-button" style="text-decoration: none; padding: 15px 40px; background: var(--asus-blue); color: white; border-radius: 50px; font-weight: bold;">Back to Home</a>
+        
+        <p class="footer-note">A confirmation email has been sent. Please refer to our <a href="policy.html" style="color: #888;">Return Policy</a> for warranty details.</p>
+    </div>
+
+    <div style="text-align: center; opacity: 0.5; font-size: 0.7rem;">
+        🛡️ Verified by Norton | 🔒 SSL Encrypted Checkout
+    </div>
+
+    <script>
+        // Simple logic to generate a random order number for the "Sample Run" 
+        document.getElementById('order-id').innerText = "#RR-" + Math.floor(100000 + Math.random() * 900000);
+    </script>
+</body>
+</html>

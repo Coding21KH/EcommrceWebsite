@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade-In | Restart Repairs</title>
+    <script src="scripts.js" defer></script>
+    <style>
+        /* --- 1. MASTER THEME --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        :root {
+            --bg-dark: #1e1e24; 
+            --asus-blue: #0082ff;
+            --glass: rgba(255, 255, 255, 0.05);
+            --text-dim: #a0a0a0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* --- 2. HEADER --- */
+        header {
+            background: white;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo { color: black; font-weight: 800; font-size: 1.5rem; text-decoration: none; }
+        .logo span { color: var(--asus-blue); }
+        
+        nav { display: flex; align-items: center; gap: 20px; }
+        nav a { color: black; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+
+        /* Currency Picker (Project Requirement) */
+        #currency-picker { padding: 5px; border-radius: 5px; border: 1px solid #ccc; cursor: pointer; }
+
+        /* --- 3. LAYOUT --- */
+        .trade-container {
+            display: flex;
+            padding: 60px 5%;
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: flex-start;
+        }
+
+        .info-text { flex: 1; }
+        .info-text h1 { font-size: 3.5rem; margin-bottom: 20px; line-height: 1.1; }
+        .info-text p { color: var(--text-dim); line-height: 1.6; margin-bottom: 20px; }
+
+        /* Multimedia Integration: Small Promo Video/Animation (Requirement) */
+        .video-box {
+            width: 100%;
+            height: 200px;
+            background: #000;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border: 1px solid var(--asus-blue);
+        }
+
+        /* --- 4. THE CALCULATOR CARD --- */
+        .calc-card {
+            flex: 1;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .calc-card h2 { margin-bottom: 25px; color: var(--asus-blue); font-size: 1.4rem; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-size: 0.8rem; font-weight: 700; color: var(--asus-blue); text-transform: uppercase; }
+
+        textarea, input[type="month"] {
+            width: 100%;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #444;
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            outline: none;
+        }
+        textarea { height: 80px; resize: none; }
+
+        .btn-group { display: flex; gap: 10px; }
+        .choice-btn {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #444;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+        .choice-btn.active { background: rgba(0, 130, 255, 0.2); border-color: var(--asus-blue); }
+
+        /* Results Area */
+        .results {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .estimate-label { font-size: 0.9rem; color: var(--text-dim); }
+        .estimate-val { font-size: 3rem; font-weight: 800; color: var(--asus-blue); margin: 10px 0; }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--asus-blue);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* Footer & Security */
+        footer { margin-top: 80px; padding: 50px 5%; background: #111; text-align: center; border-top: 1px solid #333; }
+        .security-badges { margin: 20px 0; display: flex; justify-content: center; gap: 20px; opacity: 0.5; font-size: 0.8rem; }
+
+        /* Live Chat Support (E-Service) */
+        #live-chat {
+            position: fixed; bottom: 20px; right: 20px; background: var(--asus-blue);
+            color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer;
+            font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 1001;
+        }
+
+        @media (max-width: 850px) { .trade-container { flex-direction: column; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">RESTART <span>REPAIRS</span></a>
+        <nav>
+            <select id="currency-picker" onchange="updatePrice()">
+                <option value="USD">USD ($)</option>
+                <option value="JMD">JMD (J$)</option>
+                <option value="GBP">GBP (£)</option>
+            </select>
+            <a href="index.html">Home</a>
+            <a href="products.html">Buy PCs</a>
+            <a href="trade.html" style="color: var(--asus-blue);">Trade-In</a>
+            <a href="membership.html">Membership</a>
+        </nav>
+    </header>
+
+    <div class="trade-container">
+        <div class="info-text">
+            <h1>Get Paid for <br>Your Old Rig.</h1>
+            <div class="video-box">
+                <video autoplay muted loop style="width:100%; height:100%; object-fit:cover; opacity: 0.6;">
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-electronic-components-of-a-server-room-close-up-10254-large.mp4" type="video/mp4">
+                </video>
+            </div>
+            <p>Tell us about your hardware and get an instant estimation. We accept all gaming PCs, GPUs, and high-end laptops.</p>
+            <ul style="list-style: none; color: var(--asus-blue); font-weight: bold; margin-bottom: 20px;">
+                <li>✓ Professional Inspection</li>
+                <li>✓ Fast Payouts (Direct to PayPal/Bank)</li>
+                <li>✓ Trade-In for Store Credit</li>
+            </ul>
+        </div>
+
+        <div class="calc-card">
+            <h2>Quick Evaluation</h2>
+            
+            <div class="form-group">
+                <label>1. Major Components</label>
+                <textarea placeholder="e.g. i9-12900k, RTX 3080, 32GB RAM"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>2. Purchase Date</label>
+                <input type="month" id="dateInput" onchange="updatePrice()">
+            </div>
+
+            <div class="form-group">
+                <label>3. Replacement Parts?</label>
+                <div class="btn-group">
+                    <button class="choice-btn active" id="origBtn" onclick="toggleParts(true)">All Original</button>
+                    <button class="choice-btn" id="repBtn" onclick="toggleParts(false)">Replacements</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>4. Condition</label>
+                <div class="btn-group">
+                    <button class="choice-btn" onclick="setCond(1.2, this)">Mint</button>
+                    <button class="choice-btn active" onclick="setCond(1.0, this)">Used</button>
+                    <button class="choice-btn" onclick="setCond(0.6, this)">Poor</button>
+                </div>
+            </div>
+
+            <div class="results">
+                <p class="estimate-label">Initial Estimate</p>
+                <p class="estimate-val" id="priceTag" data-base="500">$500</p>
+                <button class="submit-btn" onclick="alert('Quote submitted! Check your email for next steps.')">Submit for Review</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="security-badges">
+            <span>🛡️ NORTON SECURE</span>
+            <span>🛡️ MCAFEE SECURE</span>
+            <span>🔒 256-BIT SSL</span>
+        </div>
+        <p>&copy; 2025 Restart Repairs. <a href="policy.html" style="color: #666;">Terms & Return Policy</a></p>
+        <p style="font-size: 0.7rem; color: #444; margin-top: 10px;">All trade-ins are subject to our final hardware inspection.</p>
+    </footer>
+
+    <div id="live-chat" onclick="alert('Connecting to Trade-In Specialist...')">💬 Live Support</div>
+
+    <script>
+        let baseValueUSD = 500;
+        let condMod = 1.0;
+        let partMod = 1.0;
+
+        function setCond(val, btn) {
+            condMod = val;
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            updatePrice();
+        }
+
+        function toggleParts(isOriginal) {
+            partMod = isOriginal ? 1.0 : 0.85;
+            document.getElementById('origBtn').classList.toggle('active', isOriginal);
+            document.getElementById('repBtn').classList.toggle('active', !isOriginal);
+            updatePrice();
+        }
+
+        function updatePrice() {
+            // Calculate Base USD Price
+            let currentUSD = baseValueUSD * condMod * partMod;
+            const date = document.getElementById('dateInput').value;
+            if (date) {
+                const year = parseInt(date.split('-')[0]);
+                if (year < 2022) currentUSD -= 100;
+            }
+            currentUSD = Math.max(50, Math.round(currentUSD));
+
+            // Apply Multi-Currency Conversion
+            const currency = document.getElementById('currency-picker').value;
+            const rates = { USD: 1, JMD: 155, GBP: 0.78 };
+            const symbols = { USD: '$', JMD: 'J$', GBP: '£' };
+
+            const finalPrice = (currentUSD * rates[currency]).toLocaleString(undefined, {minimumFractionDigits: 0});
+            document.getElementById('priceTag').innerText = `${symbols[currency]}${finalPrice}`;
+        }
+    </script>
+</body>
+</html>

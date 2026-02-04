@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Restart Repairs</title>
+    <style>
+        /* Shared Styles */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --bg-dark: #1e1e24; --asus-blue: #0082ff; --glass: rgba(255, 255, 255, 0.05); }
+        body { background-color: var(--bg-dark) !important; color: white; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        header { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; }
+        .logo { color: black; font-weight: 800; font-size: 1.5rem; text-decoration: none; }
+        .logo span { color: var(--asus-blue); }
+        
+        .auth-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 5%; }
+        .auth-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            padding: 50px 40px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+        h1 { margin-bottom: 10px; font-size: 2rem; }
+        p { color: #a0a0a0; margin-bottom: 30px; font-size: 0.9rem; }
+        
+        .form-group { text-align: left; margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-size: 0.75rem; color: var(--asus-blue); font-weight: 700; text-transform: uppercase; }
+        input {
+            width: 100%;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #444;
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            outline: none;
+        }
+        
+        .btn-auth {
+            width: 100%;
+            background: var(--asus-blue);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn-auth:hover { box-shadow: 0 0 20px rgba(0, 130, 255, 0.4); }
+        
+        .switch-link { margin-top: 25px; font-size: 0.85rem; color: #a0a0a0; }
+        .switch-link a { color: var(--asus-blue); text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">RESTART <span>REPAIRS</span></a>
+    </header>
+
+    <main class="auth-wrapper">
+        <div class="auth-card">
+            <h1>Welcome Back.</h1>
+            <p>Login to access your member dashboard.</p>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="email" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-auth">Login</button>
+            </form>
+            <div class="switch-link">
+                Don't have an account? <a href="signup.html">Sign up</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Simulate session storage
+            localStorage.setItem('isLoggedIn', 'true');
+            alert("Login Successful! Returning to Home Page.");
+            window.location.href = "index.html"; // Redirection 
+        });
+    </script>
+</body>
+</html>
