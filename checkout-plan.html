@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Restart Repairs</title>
+    <style>
+        * { box-sizing: border-box; margin:0; padding:0; }
+        :root { --bg-dark:#1e1e24; --asus-blue:#0082ff; --glass:rgba(255,255,255,0.05); --success:#00ff88; --error:#ff4d4d; }
+        body { background:var(--bg-dark); color:white; font-family:'Segoe UI',sans-serif; min-height:100vh; display:flex; flex-direction:column; }
+        header { background:white; padding:15px 5%; display:flex; justify-content:space-between; align-items:center; }
+        .logo { color:black; font-weight:800; font-size:1.5rem; text-decoration:none; }
+        .logo span { color:var(--asus-blue); }
+
+        .container { max-width:900px; margin:40px auto; padding:0 5%; flex:1; }
+        .checkout-card { background:var(--glass); backdrop-filter:blur(12px); padding:40px; border-radius:25px; border:1px solid rgba(255,255,255,0.1); }
+        h1 { font-size:2.2rem; margin-bottom:8px; text-align:center; }
+        .plan-info { text-align:center; margin-bottom:35px; }
+        .plan-name { font-size:1.8rem; color:var(--asus-blue); }
+        .plan-price { font-size:2.8rem; font-weight:800; margin:12px 0; }
+        .plan-desc { color:#aaa; font-size:1.05rem; }
+
+        .form-group { margin-bottom:24px; }
+        label { display:block; margin-bottom:8px; font-size:0.85rem; color:var(--asus-blue); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; }
+        input, select { width:100%; padding:14px; background:rgba(0,0,0,0.35); border:1px solid #444; color:white; border-radius:12px; font-size:1rem; }
+        input:focus, select:focus { border-color:var(--asus-blue); outline:none; box-shadow:0 0 0 3px rgba(0,130,255,0.2); }
+
+        .row { display:flex; gap:20px; flex-wrap:wrap; }
+        .row > div { flex:1; min-width:200px; }
+
+        .pay-btn { width:100%; background:var(--asus-blue); color:white; border:none; padding:18px; border-radius:50px; font-size:1.2rem; font-weight:700; cursor:pointer; margin-top:30px; transition:0.3s; }
+        .pay-btn:hover { background:#0066cc; box-shadow:0 0 25px rgba(0,130,255,0.5); transform:translateY(-2px); }
+
+        .success-msg, .error-msg { padding:20px; border-radius:12px; margin:25px 0; text-align:center; font-size:1.1rem; display:none; }
+        .success-msg { background:rgba(0,255,136,0.15); border:1px solid var(--success); color:var(--success); }
+        .error-msg   { background:rgba(255,77,77,0.15);  border:1px solid var(--error);   color:var(--error);   }
+
+        footer { padding:40px 5%; background:#111; text-align:center; border-top:1px solid #333; margin-top:auto; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">RESTART <span>REPAIRS</span></a>
+    </header>
+
+    <div class="container">
+        <div class="checkout-card">
+            <h1>Complete Your Membership</h1>
+
+            <div class="plan-info" id="planDetails">
+                <div class="plan-name" id="planName">Loading plan...</div>
+                <div class="plan-price" id="planPrice"></div>
+                <div class="plan-desc" id="planDesc"></div>
+            </div>
+
+            <form id="paymentForm">
+                <div class="form-group">
+                    <label>Card Number</label>
+                    <input type="text" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label>Expiry Date</label>
+                        <input type="text" placeholder="MM/YY" maxlength="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label>CVC</label>
+                        <input type="text" placeholder="123" maxlength="4" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Name on Card</label>
+                    <input type="text" placeholder="John Doe" required>
+                </div>
+
+                <button type="submit" class="pay-btn">Pay Now – Secure Checkout</button>
+            </form>
+
+            <div class="success-msg" id="successMsg">
+                🎉 Payment successful! Your membership is now active.<br>
+                Redirecting back to membership page...
+            </div>
+            <div class="error-msg" id="errorMsg"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Restart Repairs. Secure payments • All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Get plan from URL (?plan=pro)
+        const urlParams = new URLSearchParams(window.location.search);
+        const plan = urlParams.get('plan') || 'starter';
+
+        const plansData = {
+            starter: { name: 'Starter', price: 0,   usd: 0,   desc: 'Basic access & email alerts – Free forever' },
+            pro:     { name: 'Pro Member', price: 19, usd: 19, desc: '15% off repairs + priority support queue' },
+            elite:   { name: 'Elite Rig', price: 49, usd: 49, desc: 'Free annual tune-ups + 24/7 dedicated support' }
+        };
+
+        const selected = plansData[plan] || plansData.starter;
+
+        document.getElementById('planName').textContent = selected.name;
+        document.getElementById('planPrice').innerHTML   = `$${selected.usd.toFixed(2)} <small>/month</small>`;
+        if (selected.usd === 0) document.getElementById('planPrice').innerHTML = 'FREE';
+        document.getElementById('planDesc').textContent  = selected.desc;
+
+        // Mock payment form submit
+        document.getElementById('paymentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Simple "validation" (demo only)
+            const card = document.querySelector('input[placeholder*="1234"]').value.trim();
+            if (card.length < 16) {
+                document.getElementById('errorMsg').textContent = 'Please enter a valid card number.';
+                document.getElementById('errorMsg').style.display = 'block';
+                return;
+            }
+
+            // Simulate processing
+            const success = document.getElementById('successMsg');
+            const error   = document.getElementById('errorMsg');
+            error.style.display = 'none';
+            success.style.display = 'block';
+
+            // Save membership tier
+            localStorage.setItem('membershipTier', plan);
+            localStorage.setItem('membershipActive', 'true');
+
+            // Redirect after 2.5 seconds
+            setTimeout(() => {
+                window.location.href = 'membership.html';
+            }, 2500);
+        });
+
+        // If free plan → auto-activate without payment
+        if (plan === 'starter') {
+            localStorage.setItem('membershipTier', 'starter');
+            localStorage.setItem('membershipActive', 'true');
+            alert('Starter plan activated for free!');
+            window.location.href = 'membership.html';
+        }
+    </script>
+</body>
+</html>
