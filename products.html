@@ -101,10 +101,10 @@
             border-radius: 20px;
             overflow: hidden;
             color: black;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
         }
-        .pc-card:hover { transform: translateY(-5px); }
+        .pc-card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,130,255,0.25); }
 
         .img-box { height: 230px; position: relative; background: #eee; }
         .img-box img { width: 100%; height: 100%; object-fit: cover; }
@@ -123,13 +123,17 @@
         }
 
         .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
+        .view-details { text-decoration:none; color:#666; font-weight:bold; font-size:0.8rem; }
         .cart-circle { 
-            background: #222; color: white; width: 45px; height: 45px; 
+            background: var(--asus-blue); color: white; width: 48px; height: 48px; 
             border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem; transition: transform 0.2s;
         }
+        .cart-circle:hover { transform: scale(1.15); }
 
         /* --- 6. FOOTER & E-SERVICE --- */
         footer { background: #111; padding: 60px 5%; text-align: center; border-top: 1px solid #333; margin-top: 60px; }
+        .newsletter { margin-bottom: 40px; }
         .security-badges { display: flex; justify-content: center; gap: 20px; margin: 20px 0; opacity: 0.5; }
         
         #live-chat {
@@ -164,15 +168,15 @@
     <div class="page-wrapper">
         <aside class="sidebar">
             <h1 class="browse-title">Inventory</h1>
-            <p class="subtitle">Certified high-performance hardware for elite gaming and workstations.</p>
+            <p class="subtitle">Certified high-performance hardware for elite gaming and workstations. All systems IN STOCK – February 2026 pricing.</p>
 
             <div class="filter-card">
                 <div class="search-pill">
-                    <input type="text" id="pcSearch" placeholder="Search models or GPUs..." onkeyup="filterProducts()">
+                    <input type="text" id="pcSearch" placeholder="Search models, GPUs..." onkeyup="filterProducts()">
                 </div>
                 <div class="dropdown-grid">
-                    <select><option>Price Range</option></select>
-                    <select><option>Brand</option></select>
+                    <select><option>Price Range</option><option>Under $1500</option><option>$1500–$3000</option><option>Over $3000</option></select>
+                    <select><option>Brand</option><option>RTX 50-Series</option><option>AMD Radeon</option></select>
                 </div>
             </div>
         </aside>
@@ -180,8 +184,27 @@
         <section class="content-area">
             <p class="section-label">AVAILABLE ELECTRONIC CATALOGUE</p>
             <div class="product-grid" id="productGrid">
-                
-                <div class="pc-card">
+
+                <!-- 1. High-End RTX 5090 -->
+                <div class="pc-card" data-id="5090-ultra" data-name="RTX 5090 Flagship Gaming PC" data-price="4999" data-image="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=600">
+                    <div class="img-box">
+                        <span class="availability-badge">IN STOCK</span>
+                        <img src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=600" alt="RTX 5090 PC">
+                    </div>
+                    <div class="card-body">
+                        <div class="rating">⭐⭐⭐⭐⭐ <span>(18 Reviews)</span></div>
+                        <h3>RTX 5090 Ultra (Ryzen 9800X3D)</h3>
+                        <p class="price" data-usd="4999">$4,999.00</p>
+                        <p class="related-snippet">32GB DDR5 • 2TB NVMe • 360mm AIO</p>
+                        <div class="card-footer">
+                            <a href="#" class="view-details">View Details →</a>
+                            <button class="cart-circle add-to-cart">🛒</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Original Liquid Cooled -->
+                <div class="pc-card" data-id="4080-liquid" data-name="Liquid Cooled i9 RTX 4080" data-price="2990" data-image="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=600">
                     <div class="img-box">
                         <span class="availability-badge">IN STOCK</span>
                         <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=600" alt="High End PC">
@@ -192,13 +215,50 @@
                         <p class="price" data-usd="2990">$2,990.00</p>
                         <p class="related-snippet">Related: 4K Gaming Monitors, Mechanical Keyboards</p>
                         <div class="card-footer">
-                            <a href="cart.html" style="text-decoration:none; color:#666; font-weight:bold; font-size:0.8rem;">View Details →</a>
-                            <button class="cart-circle">🛒</button>
+                            <a href="#" class="view-details">View Details →</a>
+                            <button class="cart-circle add-to-cart">🛒</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="pc-card">
+                <!-- 3. RTX 5080 Balanced -->
+                <div class="pc-card" data-id="5080-pro" data-name="RTX 5080 Performance Rig" data-price="3199" data-image="https://images.unsplash.com/photo-1632749042303-7f7a18ed6ff0?w=600">
+                    <div class="img-box">
+                        <span class="availability-badge">IN STOCK</span>
+                        <img src="https://images.unsplash.com/photo-1632749042303-7f7a18ed6ff0?w=600" alt="RTX 5080 Rig">
+                    </div>
+                    <div class="card-body">
+                        <div class="rating">⭐⭐⭐⭐⭐ <span>(15 Reviews)</span></div>
+                        <h3>RTX 5080 Performance Rig</h3>
+                        <p class="price" data-usd="3199">$3,199.00</p>
+                        <p class="related-snippet">32GB RAM • 1TB SSD • RGB Liquid Cooling</p>
+                        <div class="card-footer">
+                            <a href="#" class="view-details">View Details →</a>
+                            <button class="cart-circle add-to-cart">🛒</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Mid-Range RTX 5070 Ti -->
+                <div class="pc-card" data-id="5070ti" data-name="RTX 5070 Ti Gaming Build" data-price="2199" data-image="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=600">
+                    <div class="img-box">
+                        <span class="availability-badge">IN STOCK</span>
+                        <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=600" alt="Mid-Range PC">
+                    </div>
+                    <div class="card-body">
+                        <div class="rating">⭐⭐⭐⭐☆ <span>(22 Reviews)</span></div>
+                        <h3>RTX 5070 Ti Gaming Build</h3>
+                        <p class="price" data-usd="2199">$2,199.00</p>
+                        <p class="related-snippet">1440p/4K Ready • 32GB DDR5 • Fast SSD</p>
+                        <div class="card-footer">
+                            <a href="#" class="view-details">View Details →</a>
+                            <button class="cart-circle add-to-cart">🛒</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Ryzen Workstation (original) -->
+                <div class="pc-card" data-id="ryzen-ws" data-name="Elite Ryzen Workstation" data-price="1450" data-image="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=600">
                     <div class="img-box">
                         <span class="availability-badge">IN STOCK</span>
                         <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=600" alt="Workstation">
@@ -209,8 +269,62 @@
                         <p class="price" data-usd="1450">$1,450.00</p>
                         <p class="related-snippet">Related: Ergonomic Chairs, Dual-Monitor Mounts</p>
                         <div class="card-footer">
-                            <a href="cart.html" style="text-decoration:none; color:#666; font-weight:bold; font-size:0.8rem;">View Details →</a>
-                            <button class="cart-circle">🛒</button>
+                            <a href="#" class="view-details">View Details →</a>
+                            <button class="cart-circle add-to-cart">🛒</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Budget RTX 5060 Ti -->
+                <div class="pc-card" data-id="5060ti-entry" data-name="RTX 5060 Ti Entry Level" data-price="1299" data-image="https://images.unsplash.com/photo-1587302912306-cf1ed9c33146?w=600">
+                    <div class="img-box">
+                        <span class="availability-badge">IN STOCK</span>
+                        <img src="https://images.unsplash.com/photo-1587302912306-cf1ed9c33146?w=600" alt="Entry PC">
+                    </div>
+                    <div class="card-body">
+                        <div class="rating">⭐⭐⭐⭐ <span>(14 Reviews)</span></div>
+                        <h3>RTX 5060 Ti Entry Level</h3>
+                        <p class="price" data-usd="1299">$1,299.00</p>
+                        <p class="related-snippet">1080p/1440p • 16GB DDR5 • Great Value</p>
+                        <div class="card-footer">
+                            <a href="#" class="view-details">View Details →</a>
+                            <button class="cart-circle add-to-cart">🛒</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. AMD Radeon RX 9070 XT Build -->
+                <div class="pc-card" data-id="rx9070xt" data-name="RX 9070 XT AMD Build" data-price="1899" data-image="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=600">
+                    <div class="img-box">
+                        <span class="availability-badge">IN STOCK</span>
+                        <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=600" alt="AMD PC">
+                    </div>
+                    <div class="card-body">
+                        <div class="rating">⭐⭐⭐⭐⭐ <span>(19 Reviews)</span></div>
+                        <h3>RX 9070 XT AMD Build</h3>
+                        <p class="price" data-usd="1899">$1,899.00</p>
+                        <p class="related-snippet">High VRAM • Excellent Raster • 1440p King</p>
+                        <div class="card-footer">
+                            <a href="#" class="view-details">View Details →</a>
+                            <button class="cart-circle add-to-cart">🛒</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. Compact Mini-ITX RTX 5070 -->
+                <div class="pc-card" data-id="mini-5070" data-name="Compact RTX 5070 Mini-ITX" data-price="1799" data-image="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=600">
+                    <div class="img-box">
+                        <span class="availability-badge">IN STOCK</span>
+                        <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=600" alt="Mini PC">
+                    </div>
+                    <div class="card-body">
+                        <div class="rating">⭐⭐⭐⭐☆ <span>(11 Reviews)</span></div>
+                        <h3>Compact RTX 5070 Mini-ITX</h3>
+                        <p class="price" data-usd="1799">$1,799.00</p>
+                        <p class="related-snippet">Small Form Factor • Portable Power</p>
+                        <div class="card-footer">
+                            <a href="#" class="view-details">View Details →</a>
+                            <button class="cart-circle add-to-cart">🛒</button>
                         </div>
                     </div>
                 </div>
@@ -232,7 +346,7 @@
             <span>🔒 SSL SECURE</span>
         </div>
         
-        <p>&copy; 2025 Restart Repairs. <a href="policy.html" style="color:#888;">Privacy & Returns</a></p>
+        <p>© 2025 Restart Repairs. <a href="policy.html" style="color:#888;">Privacy & Returns</a></p>
         <p style="font-size:0.7rem; color:#444; margin-top:10px;">All content is copyrighted. Unauthorized use is prohibited.</p>
     </footer>
 
@@ -253,16 +367,40 @@
         // 2. Multi-Currency Conversion Logic
         function updateCurrency() {
             const picker = document.getElementById('currency-picker');
-            const rates = { USD: 1, JMD: 155, GBP: 0.78 };
+            const rates = { USD: 1, JMD: 155, GBP: 0.78 }; // Approximate rates – update as needed
             const symbols = { USD: '$', JMD: 'J$', GBP: '£' };
             const selected = picker.value;
             
             document.querySelectorAll('.price').forEach(el => {
                 const usdValue = parseFloat(el.getAttribute('data-usd'));
-                const converted = (usdValue * rates[selected]).toLocaleString(undefined, {minimumFractionDigits: 2});
+                const converted = (usdValue * rates[selected]).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
                 el.innerText = `${symbols[selected]}${converted}`;
             });
         }
+
+        // 3. Add to Cart Functionality (saves to localStorage)
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const card = e.target.closest('.pc-card');
+                const product = {
+                    id: card.dataset.id,
+                    name: card.querySelector('h3').innerText,
+                    price: parseFloat(card.dataset.price),
+                    image: card.dataset.image
+                };
+
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const exists = cart.some(item => item.id === product.id);
+                
+                if (!exists) {
+                    cart.push(product);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    alert(`${product.name} added to your cart!`);
+                } else {
+                    alert(`${product.name} is already in your cart.`);
+                }
+            });
+        });
     </script>
 </body>
 </html>
