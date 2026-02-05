@@ -5,16 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Restart Repairs</title>
     <style>
-        /* Shared Styles */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        :root { --bg-dark: #1e1e24; --asus-blue: #0082ff; --glass: rgba(255, 255, 255, 0.05); }
-        body { background-color: var(--bg-dark) !important; color: white; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
-        
-        header { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; }
-        .logo { color: black; font-weight: 800; font-size: 1.5rem; text-decoration: none; }
+        :root {
+            --bg-dark: #1e1e24;
+            --asus-blue: #0082ff;
+            --glass: rgba(255, 255, 255, 0.05);
+            --error-red: #ff4d4d;
+            --success-green: #00ff88;
+        }
+        body {
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: white;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            color: black;
+            font-weight: 800;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
         .logo span { color: var(--asus-blue); }
-        
-        .auth-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 5%; }
+
+        .auth-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 5%;
+        }
+
         .auth-card {
             background: var(--glass);
             backdrop-filter: blur(15px);
@@ -22,24 +52,59 @@
             border-radius: 30px;
             border: 1px solid rgba(255,255,255,0.1);
             width: 100%;
-            max-width: 420px;
+            max-width: 440px;
             text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
         }
-        h1 { margin-bottom: 10px; font-size: 2rem; }
-        p { color: #a0a0a0; margin-bottom: 30px; font-size: 0.9rem; }
-        
-        .form-group { text-align: left; margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; font-size: 0.75rem; color: var(--asus-blue); font-weight: 700; text-transform: uppercase; }
+
+        h1 { font-size: 2.2rem; margin-bottom: 8px; }
+        .subtitle { color: #a0a0a0; margin-bottom: 35px; font-size: 0.95rem; }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 24px;
+            position: relative;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.78rem;
+            color: var(--asus-blue);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
         input {
             width: 100%;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.35);
             border: 1px solid #444;
             color: white;
-            padding: 14px;
+            padding: 14px 16px;
             border-radius: 12px;
-            outline: none;
+            font-size: 1rem;
+            transition: border-color 0.3s;
         }
-        
+        input:focus {
+            border-color: var(--asus-blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0,130,255,0.15);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
         .btn-auth {
             width: 100%;
             background: var(--asus-blue);
@@ -48,35 +113,84 @@
             padding: 16px;
             border-radius: 50px;
             font-weight: 700;
+            font-size: 1.05rem;
             cursor: pointer;
-            margin-top: 10px;
+            transition: all 0.3s;
+            margin: 15px 0 10px;
         }
-        .btn-auth:hover { box-shadow: 0 0 20px rgba(0, 130, 255, 0.4); }
-        
-        .switch-link { margin-top: 25px; font-size: 0.85rem; color: #a0a0a0; }
-        .switch-link a { color: var(--asus-blue); text-decoration: none; font-weight: 600; }
+        .btn-auth:hover {
+            background: #0066cc;
+            box-shadow: 0 0 25px rgba(0,130,255,0.45);
+            transform: translateY(-1px);
+        }
+
+        .error-message {
+            color: var(--error-red);
+            font-size: 0.85rem;
+            margin-top: 6px;
+            min-height: 1.2em;
+            display: none;
+        }
+
+        .forgot-link {
+            display: block;
+            margin: 12px 0 25px;
+            color: #a0a0a0;
+            font-size: 0.88rem;
+        }
+        .forgot-link a {
+            color: var(--asus-blue);
+            text-decoration: none;
+        }
+        .forgot-link a:hover { text-decoration: underline; }
+
+        .switch-link {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #a0a0a0;
+        }
+        .switch-link a {
+            color: var(--asus-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .switch-link a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
+
     <header>
         <a href="index.html" class="logo">RESTART <span>REPAIRS</span></a>
     </header>
 
     <main class="auth-wrapper">
         <div class="auth-card">
-            <h1>Welcome Back.</h1>
-            <p>Login to access your member dashboard.</p>
+            <h1>Welcome Back</h1>
+            <p class="subtitle">Sign in to access your member dashboard & exclusive benefits</p>
+
             <form id="loginForm">
                 <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" id="email" placeholder="john@example.com" required>
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="john@example.com" required autocomplete="email">
+                    <div class="error-message" id="emailError"></div>
                 </div>
+
                 <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="password" placeholder="••••••••" required>
+                    <label for="password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+                        <button type="button" class="toggle-password" id="togglePass">👁️</button>
+                    </div>
+                    <div class="error-message" id="passError"></div>
                 </div>
+
                 <button type="submit" class="btn-auth">Login</button>
+
+                <div class="forgot-link">
+                    <a href="#">Forgot your password?</a>
+                </div>
             </form>
+
             <div class="switch-link">
                 Don't have an account? <a href="signup.html">Sign up</a>
             </div>
@@ -84,13 +198,67 @@
     </main>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            // Simulate session storage
-            localStorage.setItem('isLoggedIn', 'true');
-            alert("Login Successful! Returning to Home Page.");
-            window.location.href = "index.html"; // Redirection 
+        // Show/hide password
+        document.getElementById('togglePass').addEventListener('click', function() {
+            const passInput = document.getElementById('password');
+            const isPassword = passInput.type === 'password';
+            passInput.type = isPassword ? 'text' : 'password';
+            this.textContent = isPassword ? '🙈' : '👁️';
         });
+
+        // Form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            const emailError = document.getElementById('emailError');
+            const passError  = document.getElementById('passError');
+
+            // Reset errors
+            emailError.style.display = 'none';
+            passError.style.display  = 'none';
+
+            let hasError = false;
+
+            // Basic validation
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                emailError.textContent = 'Please enter a valid email address';
+                emailError.style.display = 'block';
+                hasError = true;
+            }
+
+            if (!password || password.length < 6) {
+                passError.textContent = 'Password must be at least 6 characters';
+                passError.style.display = 'block';
+                hasError = true;
+            }
+
+            if (hasError) return;
+
+            // Mock successful login
+            const user = {
+                email: email,
+                name: email.split('@')[0] || 'Member',
+                joined: new Date().toLocaleDateString('en-GB'),
+                isAuthenticated: true
+            };
+
+            localStorage.setItem('restartUser', JSON.stringify(user));
+            localStorage.setItem('isLoggedIn', 'true');
+
+            alert(`Welcome back, ${user.name}!`);
+            
+            // Redirect to home (or membership if you prefer)
+            window.location.href = 'index.html';
+            // Alternative: window.location.href = 'membership.html';
+        });
+
+        // If already logged in → skip login page
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            window.location.href = 'index.html'; // or 'membership.html'
+        }
     </script>
 </body>
 </html>
