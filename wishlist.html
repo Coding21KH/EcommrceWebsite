@@ -10,6 +10,7 @@
         .wishlist-item { background: rgba(255,255,255,0.05); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; position: relative; }
         .availability { font-size: 0.7rem; font-weight: bold; color: #00ff88; margin-bottom: 5px; display: block; }
         .nav-icons { display: flex; align-items: center; gap: 15px; border-left: 1px solid #ddd; padding-left: 15px; }
+        .cta-button { cursor: pointer; }
     </style>
 </head>
 <body style="background:#1e1e24; color:white;">
@@ -34,26 +35,70 @@
         <input type="text" id="pcSearch" placeholder="Search your wishlist..." style="width:100%; padding:15px; margin:20px 0; border-radius:10px; border:1px solid #444; background:rgba(0,0,0,0.3); color:white;">
         
         <div class="wishlist-grid">
-            <div class="wishlist-item">
+            <!-- Example items – add data-id, data-name, data-price, data-image to each -->
+            <div class="wishlist-item" data-id="5090rig" data-name="RTX 5090 Ultra Gaming PC" data-price="4499" data-image="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=400">
+                <img src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=400" style="width:100%; height:200px; object-fit:cover;">
+                <div style="padding:20px;">
+                    <span class="availability">● IN STOCK</span>
+                    <h3>RTX 5090 Ultra Gaming PC</h3>
+                    <div style="color:gold; font-size:0.8rem;">⭐⭐⭐⭐⭐ (12 Reviews)</div>
+                    <p class="price" data-usd="4499">$4,499.00</p>
+                    <a class="cta-button add-to-cart" style="display:block; text-align:center; background:#0082ff; color:white; padding:12px; border-radius:50px; text-decoration:none; margin-top:15px;">Add to Cart</a>
+                </div>
+            </div>
+
+            <div class="wishlist-item" data-id="4080rig" data-name="RTX 4080 Gaming Rig" data-price="2499" data-image="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=400">
                 <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=400" style="width:100%; height:200px; object-fit:cover;">
                 <div style="padding:20px;">
                     <span class="availability">● IN STOCK</span>
                     <h3>RTX 4080 Gaming Rig</h3>
                     <div style="color:gold; font-size:0.8rem;">⭐⭐⭐⭐⭐ (8 Reviews)</div>
                     <p class="price" data-usd="2499">$2,499.00</p>
-                    <a href="cart.html" class="cta-button" style="display:block; text-align:center; background:#0082ff; color:white; padding:12px; border-radius:50px; text-decoration:none; margin-top:15px;">Add to Cart</a>
+                    <a class="cta-button add-to-cart" style="display:block; text-align:center; background:#0082ff; color:white; padding:12px; border-radius:50px; text-decoration:none; margin-top:15px;">Add to Cart</a>
                 </div>
             </div>
+
+            <div class="wishlist-item" data-id="oled32" data-name="32\" 4K 240Hz QD-OLED Monitor" data-price="1199" data-image="https://images.unsplash.com/photo-1587302912306-cf1ed9c33146?w=400">
+                <img src="https://images.unsplash.com/photo-1587302912306-cf1ed9c33146?w=400" style="width:100%; height:200px; object-fit:cover;">
+                <div style="padding:20px;">
+                    <span class="availability">● IN STOCK</span>
+                    <h3>32" 4K 240Hz QD-OLED Monitor</h3>
+                    <div style="color:gold; font-size:0.8rem;">⭐⭐⭐⭐⭐ (22 Reviews)</div>
+                    <p class="price" data-usd="1199">$1,199.00</p>
+                    <a class="cta-button add-to-cart" style="display:block; text-align:center; background:#0082ff; color:white; padding:12px; border-radius:50px; text-decoration:none; margin-top:15px;">Add to Cart</a>
+                </div>
+            </div>
+
+            <!-- Add more items the same way -->
         </div>
     </main>
 
     <footer style="text-align:center; padding:50px; border-top:1px solid #333;">
-        <div style="margin-bottom:20px;">
-            <span style="opacity:0.5; margin:0 10px;">🛡️ NORTON SECURE</span>
-            <span style="opacity:0.5; margin:0 10px;">🛡️ MCAFEE SECURE</span>
-        </div>
-        <p>&copy; 2025 Restart Repairs. <a href="policy.html" style="color:#888;">Terms & Warranties</a></p>
+        <p>© 2025 Restart Repairs. <a href="policy.html" style="color:#888;">Terms & Warranties</a></p>
     </footer>
-    <div id="live-chat" style="position:fixed; bottom:20px; right:20px; background:#0082ff; padding:15px 25px; border-radius:50px; cursor:pointer; font-weight:bold;">💬 Support</div>
+
+    <script>
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const item = e.target.closest('.wishlist-item');
+                const product = {
+                    id: item.dataset.id,
+                    name: item.dataset.name,
+                    price: parseFloat(item.dataset.price),
+                    image: item.dataset.image
+                };
+
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const exists = cart.some(i => i.id === product.id);
+                if (!exists) {
+                    cart.push(product);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    alert(`${product.name} added to cart!`);
+                } else {
+                    alert(`${product.name} is already in your cart.`);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
